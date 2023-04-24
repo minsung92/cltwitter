@@ -29,20 +29,15 @@ const Nweet = ({ nweetObj, isOwner }) => {
       {editing ? (
         <>
           <form onSubmit={onSubmit}>
-            <input
-              type='text'
-              placeholder='Edit your mind?'
-              value={newNweet}
-              required
-              onChange={onChange}
-            />
-            <input type='submit' value='Update' />
+            <input type="text" placeholder="Edit your mind?" value={newNweet} required onChange={onChange} />
+            <input type="submit" value="Update" />
           </form>
           <button onClick={tooggleEditing}>Cancel</button>
         </>
       ) : (
         <>
           <h4>{nweetObj.text}</h4>
+          {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} width="50px" height="50px" />}
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete Nweet</button>
