@@ -12,7 +12,12 @@ import {
   deleteDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { getStorage, uploadString, ref, getDownloadURL } from 'firebase/storage';
+import {
+  getStorage,
+  uploadString,
+  ref,
+  getDownloadURL,
+} from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
