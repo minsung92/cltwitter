@@ -11,13 +11,9 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  where,
 } from 'firebase/firestore';
-import {
-  getStorage,
-  uploadString,
-  ref,
-  getDownloadURL,
-} from 'firebase/storage';
+import { getStorage, uploadString, ref, getDownloadURL } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -45,3 +41,4 @@ export const storageService = getStorage();
 export const dbUploadString = uploadString;
 export const dbRef = ref;
 export const dbGetDownloadURL = getDownloadURL;
+export const dbWhere = where;
