@@ -21,16 +21,12 @@ function App() {
           displayName: user.displayName,
           uid: user.uid,
           email: user.email,
-          updateProfile: (args) => UpdateProfile(user, { displayName: user.displayName }),
+          updateProfile: (args) =>
+            UpdateProfile(user, { displayName: user.displayName }),
         });
-        // setUserObj({
-        //   displayName: user.displayName,
-        //   uid: user.uid,
-        //   email: user.email,
-        //   updateProfile: (args) => UpdateProfile(user, { displayName: user.displayName }),
-        // });
       } else {
         setIsLoggedIn(false);
+        setUserObj(null);
       }
       setInit(true);
     });
@@ -42,12 +38,21 @@ function App() {
       displayName: newDisplayName,
       uid: user.uid,
       email: user.email,
-      updateProfile: (args) => UpdateProfile(user, { displayName: user.displayName }),
+      updateProfile: (args) =>
+        UpdateProfile(user, { displayName: user.displayName }),
     });
   };
   return (
     <>
-      {init ? <AppRouter refreshUser={refreshUser} isLoggedIn={isLoggedIn} userObj={userObj} /> : 'Initializing...'}
+      {init ? (
+        <AppRouter
+          refreshUser={refreshUser}
+          isLoggedIn={isLoggedIn}
+          userObj={userObj}
+        />
+      ) : (
+        'Initializing...'
+      )}
       <footer>&copy; {new Date().getFullYear()} Cltwitter</footer>
     </>
   );
