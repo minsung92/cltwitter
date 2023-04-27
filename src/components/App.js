@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AppRouter from 'components/Router';
-import { authService } from 'fbase';
+import { authService, UpdateProfile } from 'fbase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 console.log(authService);
@@ -17,18 +17,37 @@ function App() {
           const name = user.email.split('@')[0];
           user.displayName = name;
         }
-        console.log(user);
-        setUserObj(user);
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          email: user.email,
+          updateProfile: (args) => UpdateProfile(user, { displayName: user.displayName }),
+        });
+        // setUserObj({
+        //   displayName: user.displayName,
+        //   uid: user.uid,
+        //   email: user.email,
+        //   updateProfile: (args) => UpdateProfile(user, { displayName: user.displayName }),
+        // });
       } else {
         setIsLoggedIn(false);
       }
       setInit(true);
     });
   }, []);
-
+  const refreshUser = (newDisplayName) => {
+    const user = getAuth().currentUser;
+    console.log(user);
+    setUserObj({
+      displayName: newDisplayName,
+      uid: user.uid,
+      email: user.email,
+      updateProfile: (args) => UpdateProfile(user, { displayName: user.displayName }),
+    });
+  };
   return (
     <>
-      {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} /> : 'Initializing...'}
+      {init ? <AppRouter refreshUser={refreshUser} isLoggedIn={isLoggedIn} userObj={userObj} /> : 'Initializing...'}
       <footer>&copy; {new Date().getFullYear()} Cltwitter</footer>
     </>
   );

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { authService, dbQuery, dbGetDocs, dbWhere, dbCollection, dbService, dbOrderBy } from 'fbase';
+import { authService, dbQuery, dbGetDocs, dbWhere, dbCollection, dbService, dbOrderBy, UpdateProfile } from 'fbase';
 import { useHistory } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
 
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const history = useHistory();
   const onLogOutClick = () => {
@@ -18,12 +19,33 @@ const Profile = ({ userObj }) => {
     );
     const querySnapshot = await dbGetDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, '=>', doc.data());
+      //console.log(doc.id, '=>', doc.data());
     });
   };
 
-  const onChnge = () => {
-    //
+  const onChnge = (e) => {
+    const {
+      target: { value },
+    } = e;
+    setNewDisplayName(value);
+  };
+
+  const onSubmit = (e) => {
+    const user = getAuth().currentUser;
+    //console.log(user);
+    e.preventDefault();
+    if (userObj.displayName !== newDisplayName) {
+      // try {
+      //   await userObj.updateProfile(user, {
+      //     displayName: newDisplayName,
+      //   });
+      //   refreshUser(newDisplayName); // refreshuser가 쓰이는 부분
+      // } catch (err) {
+      //   console.log(err);
+      // }
+      UpdateProfile(user, { displayName: newDisplayName });
+      refreshUser(newDisplayName);
+    }
   };
 
   useEffect(() => {
@@ -32,7 +54,7 @@ const Profile = ({ userObj }) => {
 
   return (
     <>
-      <form>
+      <form onSubmit={onSubmit}>
         <input type="text" placeholder="Display Name" onChange={onChnge} value={newDisplayName} />
         <input type="submit" value="Update Profile" />
       </form>

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, updateProfile } from 'firebase/auth';
 import {
   getFirestore,
   addDoc,
@@ -42,3 +42,4 @@ export const dbUploadString = uploadString;
 export const dbRef = ref;
 export const dbGetDownloadURL = getDownloadURL;
 export const dbWhere = where;
+export const UpdateProfile = updateProfile;
