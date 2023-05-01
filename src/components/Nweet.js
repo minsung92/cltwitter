@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { dbService, storageService } from 'fbase';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { ref, deleteObject } from 'firebase/storage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -17,7 +19,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
   const onChange = (e) => {
     setNewNweet(e.target.value);
   };
-  const tooggleEditing = () => setEditing((prev) => !prev);
+  const toggleEditing = () => setEditing((prev) => !prev);
   const onSubmit = async (e) => {
     e.preventDefault();
     const NweetTextRef = doc(dbService, 'nweets', `${nweetObj.id}`);
@@ -27,32 +29,38 @@ const Nweet = ({ nweetObj, isOwner }) => {
     setEditing(false);
   };
   return (
-    <div>
+    <div className='nweet'>
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className='container nweetEdit'>
             <input
               type='text'
               placeholder='Edit your mind?'
               value={newNweet}
               required
               onChange={onChange}
+              autoFocus
+              className='formInput'
             />
-            <input type='submit' value='Update' />
+            <input type='submit' value='Update Nweet' className='formBtn' />
           </form>
-          <button onClick={tooggleEditing}>Cancel</button>
+          <span onClick={toggleEditing} className='formBtn cancelBtn'>
+            Cancel
+          </span>
         </>
       ) : (
         <>
           <h4>{nweetObj.text}</h4>
-          {nweetObj.attachmentUrl && (
-            <img src={nweetObj.attachmentUrl} width='50px' height='50px' />
-          )}
+          {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} />}
           {isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete Nweet</button>
-              <button onClick={tooggleEditing}>Edit Nweet</button>
-            </>
+            <duv className='nweet__actions'>
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </duv>
           )}
         </>
       )}

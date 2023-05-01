@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { authService, dbQuery, dbGetDocs, dbWhere, dbCollection, dbService, dbOrderBy, UpdateProfile } from 'fbase';
+import {
+  authService,
+  dbQuery,
+  dbGetDocs,
+  dbWhere,
+  dbCollection,
+  dbService,
+  dbOrderBy,
+  UpdateProfile,
+} from 'fbase';
 import { useHistory } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 
@@ -53,13 +62,29 @@ const Profile = ({ userObj, refreshUser }) => {
   }, []);
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input type="text" placeholder="Display Name" onChange={onChnge} value={newDisplayName} />
-        <input type="submit" value="Update Profile" />
+    <div className='container'>
+      <form onSubmit={onSubmit} className='profileForm'>
+        <input
+          type='text'
+          placeholder='Display Name'
+          onChange={onChnge}
+          value={newDisplayName}
+          autoFocus
+          className='formInput'
+        />
+        <input
+          type='submit'
+          value='Update Profile'
+          className='formBtn'
+          style={{
+            marginTop: 10,
+          }}
+        />
       </form>
-      <button onClick={onLogOutClick}>Log Out</button>
-    </>
+      <span className='formBtn cancelBtn logOut' onClick={onLogOutClick}>
+        Log Out
+      </span>
+    </div>
   );
 };
 
