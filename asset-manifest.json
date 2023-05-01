@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/cltwitter/static/css/main.7ca68190.css",
+    "main.js": "/cltwitter/static/js/main.836eaf04.js",
+    "index.html": "/cltwitter/index.html",
+    "main.7ca68190.css.map": "/cltwitter/static/css/main.7ca68190.css.map",
+    "main.836eaf04.js.map": "/cltwitter/static/js/main.836eaf04.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7ca68190.css",
+    "static/js/main.836eaf04.js"
+  ]
+}
